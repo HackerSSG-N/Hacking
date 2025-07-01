@@ -28,6 +28,7 @@ https://mega.nz/file/664lTCoI#apU7Ki7d311RBwg_cxOufQ-ov8314wR9I2zLgT1TTOM
 
 ## IP Addressing and Subnetting - Zero to Hero
 
+https://mega.nz/file/LrBwkQ7B#P2YiV6FJzYVyM4MokqsEsA5VRlB1otJM9cl5Hshkzog
 
 ## Digital Forensics for Pentesters Practical Investigations
 
