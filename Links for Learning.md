@@ -188,3 +188,44 @@ https://www.terabox.com/sharing/link?surl=BpA3OdWHEBbdbdYyRSAL-A
 ## AWS Penetration testing guide
 
 https://www.hackthebox.com/blog/aws-pentesting-guide
+
+---
+
+## 💥💥Fresh Paid Hackpack💥💥
+SIZE : 51 GB💠
+
+🔻Zsecurity All Courses(updated)
+🔻Build A Python Speech Assistant   
+     App
+🔻Python Project Create Real Software
+🔻Make Google Translate App in 
+    Python app developmenot with 
+    CID
+🔻Build A Python App That Tracks Amazon Prices!
+🔻Coding Livestream Creating an Online Chat App with Python
+🔻How to Create Calculator in Python - Full Tutorial
+🔻How to make a Billing Software in Python 
+🔻How To Make a Chatbot in Python
+🔻Python Snake Game Written and Deployed on IPHONE in TWENTY MINUTES
+🔻Ankit Fadia All Materials
+🔻Computer virus guide
+🔻Gmail Hacking guide
+🔻Greyhat hacking
+🔻Google secret guide
+🔻Hacking highschool all ebook
+🔻website hacking secret
+🔻window xp hack
+🔻Programing materials
+🔻Kali linux All Materials
+🔻Operating Systems Instalation guide(kali linux,Arch linux,Parrot Os,Termux,ubuntu)
+🔻 CyberTraining365 Certified Ethical Hacker (CEH)
+🔻Othet 250 materials
+🔻Bug bounty Course
+🔻Kali linux basic course
+🔻Kali linux complete course
+🔻Ethical Hacking complete course
+And many more.....
+
+Download link:🔹
+https://mega.nz/folder/4VFXBKpT#qEzhyi-DmXLLSXfQuAJuyg
+---
