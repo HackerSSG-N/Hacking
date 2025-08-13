@@ -1,3 +1,66 @@
+# Updated at 13 august 2025
+
+## TCM Security All Courses Working Links
+
+TCM - Practical API Hacking
+> Download link
+https://mega.nz/file/hbsiGBgB#ga6xtaKR34RVD9AkplbT3TFS-4w_qPuz1u-PO08Bp68
+
+Mobile App pen testing TCM course
+
+https://mega.nz/folder/g2g0nKRT#2XcoogAEmY-0I2_e6H-EbA
+
+TCM practical website penetration testing course 
+
+https://mega.nz/file/aB4FwYbC#mhbmg5paSYnQzeKfSIu5sjkiItRFFMhJS61inuYiXzA
+
+TCM - Academy Live Workshops 2024
+
+https://mega.nz/file/FHFU3CjI#RE42dC0Xv9prS4vQQMA2L9B-VQX3cD-gwc_ZPTLNgms
+
+TCM - Linux Privilege Escalation for Beginners2024
+> ☠Download link
+https://mega.nz/file/tXNTALAJ#sHd67ibXDCNctt_5ElBMUfe79AYt7VQEEIibzOuj2UY
+
+TCM - Windows Privilege Escalation for Beginners2024
+> Download Link:
+https://mega.nz/file/NKMkDL4C#YCOFniKH2zZYfRbZx6DiCEZgQ8z_OtOfa12omh1vzrs
+
+📚 TCM Security C# 101 For Hackers Course Aug 2024 📚
+> Download link: 
+https://mega.nz/folder/add3iSCC#fGd_clQxU8lMZZZ-pFBScw
+
+TCM Security Practical Malware Analysis 
+
+https://mega.nz/folder/zrQHlKyS#ZUPIYssfkZaXj578WIUtWQ
+
+TCM Security Practical Phishing Assessment 
+
+https://mega.nz/folder/frgnVY5A#A02_HFg-SKzn21jpG3l-Lg
+
+TCM Security Python 101 For Hackers
+> Download link
+https://mega.nz/folder/HjgQXJJJ#ok--ait7yppytYJol7jrxQ
+
+📚 TCM Security Rust 101 For Hackers Course Aug 2024 📚
+> Download link: 
+https://mega.nz/folder/LAlixBpD#xtR9LM5sfbU4qRCjEBfDOg
+
+📚 TCM Security SOC 101 25 hours full course Aug 2024 📚
+> Download link:
+https://mega.nz/folder/fB0jVLwR#Lz3Db9D3yWB-juaRvuhfRw
+
+TCM Security - Open-Source Intelligence (OSINT) Fundamentals
+
+https://teraboxapp.com/s/1BDXVPWJkWjexCdy2oNh3FA
+
+Liang Yang Loi - Full Mobile Hacking Course😁😁
+
+▪️Link:- https://mega.nz/folder/hCMWnZbQ#4g5JmL2ZW91q6dw0Y-aNIA/folder/YWtkHDrC
+
+---
+
+# Updated at 1  july 2025
 ## OSCP Complete tutorial
 
 https://drive.google.com/drive/folders/1Vf5-QAabvCS1xX9hiOuOCpwEFFHrQhdw
