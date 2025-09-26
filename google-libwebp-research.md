@@ -18,3 +18,12 @@ cmake --version
 - If not: install failures => check network, run sudo apt --fix-broken install, or install needed packages individually.
 
 ### Phase 1 — Clone libwebp source
+
+```curl
+git clone https://chromium.googlesource.com/webm/libwebp
+cd libwebp
+```
+
+- Purpose: get the libwebp source tree.
+- Expected: new libwebp/ folder and cd libwebp places you in repo root. git rev-parse --abbrev-ref HEAD should show branch (e.g., master or main).
+- If not: ensure git installed and URL is reachable.
