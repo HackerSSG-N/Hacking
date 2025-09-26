@@ -56,3 +56,108 @@ make install
 
 - If only shared libs built: redo cmake with -DBUILD_SHARED_LIBS=OFF.
 - If ASan complains during build: ensure clang is used (check which clang and clang --version).
+
+---
+
+### Phase 3 — Write a tiny libFuzzer harness (one file)
+
+- Create a file simple_webp_fuzz.c in the repo root (i.e., libwebp/simple_webp_fuzz.c).
+
+```c
+cat > simple_webp_fuzz.c <<'CFA'
+#include <stddef.h>
+#include <stdint.h>
+#include <webp/decode.h>
+#include <webp/types.h>
+#include <stdlib.h>
+
+// libFuzzer entry point
+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
+    if (size == 0) return 0;
+    // Try decode to RGBA; decoder returns NULL on invalid input.
+    int width = 0, height = 0;
+    // First, quick check: do not pass absurdly large sizes to avoid OOM in fuzz environment
+    if (size > 50 * 1024 * 1024) return 0; // skip extremely large inputs
+    uint8_t *out = WebPDecodeRGBA(data, size, &width, &height);
+    if (out) {
+        // touch first and last bytes to ensure memory actually mapped/accessible
+        volatile uint8_t x = out[0];
+        volatile uint8_t y = out[(width * height * 4) > 0 ? (width * height * 4 - 1) : 0];
+        (void)x; (void)y;
+        WebPFree(out);
+    }
+    return 0;
+}
+CFA
+```
+
+- Purpose: This harness feeds libFuzzer's random bytes into WebPDecodeRGBA() — the decoder you want to fuzz. It avoids massive allocations and frees output properly.
+- Expected: file simple_webp_fuzz.c created.
+
+---
+
+### Phase 4 — Compile the harness linking libwebp & libFuzzer
+
+- From libwebp/build (we installed into build/install), run:
+
+```curl
+# ensure we are in libwebp/build
+pwd
+# compile harness (adjust paths if your install prefix differs)
+clang -g -O1 -fno-omit-frame-pointer \
+  -fsanitize=address,undefined,fuzzer \
+  -I"$PWD/install/include" \
+  ../simple_webp_fuzz.c \
+  -L"$PWD/install/lib" -lwebp -o simple_webp_fuzz
+```
+### faced error here
+
+```curl
+fatal error: 'webp/decode.h' file not found
+```
+
+- Fix: Build and install libwebp locally
+
+- Run these commands inside ~/google-research/libwebp:
+
+```curl
+# 1. Create a build directory
+mkdir build-dir && cd build-dir
+
+# 2. Configure build with install prefix
+cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="$PWD/../install" ..
+
+# 3. Build everything
+make -j$(nproc)
+
+# 4. Install into ../install (headers and libs go there)
+make install
+```
+
+### What happens:
+
+- After step 2 → CMake checks your system and prepares build files.
+Expected output: no fatal errors. You’ll see -- Configuring done and -- Generating done.
+
+- After step 3 → it compiles libwebp.
+Expected output: lots of Building C object..., then no errors.
+
+- After step 4 → it copies headers to ../install/include/webp/ and libs to ../install/lib/.
+Expected output: you should now have:
+
+```curl
+ls ../install/include/webp
+# should show decode.h, encode.h, etc.
+
+ls ../install/lib
+# should show libwebp.a or libwebp.so
+```
+ 
+- check harness built or not
+
+```curl
+ls -lh simple_webp_fuzz
+```
+
+---
+
