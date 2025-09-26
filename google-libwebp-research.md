@@ -1,4 +1,4 @@
-### Phase 0 — Install required tools
+## Phase 0 — Install required tools
 
 ```curl
 sudo apt update
@@ -19,7 +19,7 @@ cmake --version
 
 --- 
 
-### Phase 1 — Clone libwebp source
+## Phase 1 — Clone libwebp source
 
 ```curl
 git clone https://chromium.googlesource.com/webm/libwebp
@@ -32,7 +32,7 @@ cd libwebp
 
 --- 
 
-### Phase 2 — Build libwebp with ASan enabled (so bugs crash loudly)
+## Phase 2 — Build libwebp with ASan enabled (so bugs crash loudly)
 
 
 ```curl
@@ -59,7 +59,7 @@ make install
 
 ---
 
-### Phase 3 — Write a tiny libFuzzer harness (one file)
+## Phase 3 — Write a tiny libFuzzer harness (one file)
 
 - Create a file simple_webp_fuzz.c in the repo root (i.e., libwebp/simple_webp_fuzz.c).
 
@@ -96,7 +96,7 @@ CFA
 
 ---
 
-### Phase 4 — Compile the harness linking libwebp & libFuzzer
+## Phase 4 — Compile the harness linking libwebp & libFuzzer
 
 - From libwebp/build (we installed into build/install), run:
 
@@ -161,3 +161,74 @@ ls -lh simple_webp_fuzz
 
 ---
 
+## Phase 5 — Create seed corpus
+
+
+```curl
+# from build/ or repo root (adjust path to simple_webp_fuzz)
+mkdir -p seeds
+# seed1: empty file
+: > seeds/seed_empty.bin
+# seed2: a few arbitrary bytes
+printf '\x00\x00\x00\x00' > seeds/seed_rand4.bin
+# seed3: if cwebp exists, build a small valid webp; else fallback to small random bytes
+if [ -x "$PWD/install/bin/cwebp" ]; then
+  # make a 16x16 blank PPM and convert to webp
+  printf "P6\n16 16\n255\n" > seeds/tmp.ppm
+  # fill with black pixels
+  dd if=/dev/zero bs=1 count=$((16*16*3)) >> seeds/tmp.ppm 2>/dev/null
+  "$PWD/install/bin/cwebp" seeds/tmp.ppm -o seeds/seed_valid.webp >/dev/null 2>&1 || true
+  rm -f seeds/tmp.ppm
+else
+  printf '\xff\xff\xff\xff\xff' > seeds/seed_valid.webp
+fi
+ls -l seeds
+```
+
+- Purpose: Provide the fuzzer some starting examples so mutation coverage is better.
+- Expected: ls -l seeds should show at least the three files.
+- If not: check that cwebp built (look in build/install/bin), or just rely on arbitrary bytes — it still works.
+
+---
+
+## Phase 6 — Run the fuzzer
+
+- From build/ where simple_webp_fuzz lives:
+
+```curl
+# run for 5 minutes (300s) as an example; remove -max_total_time to run longer
+mkdir -p artifacts
+./simple_webp_fuzz seeds -artifact_prefix=./artifacts/ -max_total_time=300 -rss_limit_mb=2048
+```
+
+
+- Purpose: start libFuzzer. It will mutate seed files and run LLVMFuzzerTestOneInput on many inputs. ASan will cause immediate, clear crash messages if issues are found.
+- Expected output sample (libFuzzer status lines):
+
+```c
+INFO: seed corpus: 3 files
+INFO: A new test case was generated with x bytes
+#... libFuzzer periodic progress lines like: cov: 10 ft: 20 corp: 3/5 exec/s: 100
+```
+
+- If a bug is found, you’ll see ASan output like:
+
+```curl
+=================================================================
+==12345==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x...
+READ of size 1 at 0x...
+    #0 0x... in some_libwebp_function .../somefile.c:123
+    #1 0x... in WebPDecodeRGBA .../decode.c:456
+    #2 0x... in LLVMFuzzerTestOneInput .../simple_webp_fuzz.c:12
+```
+
+- and a crash file will be written to ./artifacts/ (files named like id:000000,sig:06,...).
+
+- If nothing happens (no crash):
+- Expected: sometimes you find nothing quickly. Let it run longer (hours/days) for more coverage.
+- Improve seeds: add many real-world .webp images to seeds/ (download publicly-available webp images).
+- Try different fuzzers (OSS-Fuzz harnesses) for more coverage.
+
+---
+
+## Phase 7 — If a crash occurs — reproduce & collect evidence
