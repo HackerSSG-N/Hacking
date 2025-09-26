@@ -232,3 +232,59 @@ READ of size 1 at 0x...
 ---
 
 ## Phase 7 — If a crash occurs — reproduce & collect evidence
+
+
+```curl
+# list artifacts
+ls -l artifacts
+# copy first artifact to a reproducible seed file
+cp artifacts/* ./seeds/repro_case
+# replay for stack trace quickly (short run)
+./simple_webp_fuzz seeds -artifact_prefix=./artifacts/ -max_total_time=10 2>&1 | tee last_run.log
+# show the top of the ASan log
+head -n 200 last_run.log
+# save the git commit you used
+cd ../..  # if needed to root of libwebp repo
+git rev-parse HEAD
+```
+
+
+- Purpose: make the crash repeatable, capture ASan stack trace and commit hash. The artifact file is the minimized input libFuzzer saved.
+- Expected: ASan output and a file seeds/repro_case that reproduces the crash reliably. git rev-parse HEAD prints the commit hash.
+
+- If you can’t reproduce: ensure you built with the same binaries (no mixing sanitized vs non-sanitized libs), and run the fuzz binary from the directory where it was built and with the same seeds/ file you copied.
+
+---
+
+## Phase 8 — What to paste here if you want my help triaging
+
+- If you hit a crash, paste ALL of the following (or attach/snippet):
+
+1- The full ASan output (the terminal text that begins with ERROR: AddressSanitizer:).
+2- The artifact filename (e.g., artifacts/id:000001,sig:06,...) and, if possible, the first ~200 bytes of that artifact (hex or printable). Use:
+
+```curl
+xxd -l 200 artifacts/id:* | sed -n '1,40p'
+```
+
+3-The git rev-parse HEAD commit hash and the exact build commands you used (the CFLAGS/cmake line).
+4-ls -l build/install/lib and ls -l build to check linking.
+
+- With that I will:
+
+point to the exact file and line in libwebp where ASan shows the crash,
+
+explain in plain language why it crashes and whether it's likely exploitable, and
+
+draft a minimal bug report you could submit upstream or to a bounty program.
+
+
+---
+
+## Quick troubleshooting cheat-sheet
+
+- simple_webp_fuzz: command not found / no such file — ensure you built with correct clang flags and are in the build dir where the binary was created.
+- Linker errors (undefined reference) — check -L path points to install/lib; run ar -t install/lib/libwebp.a to see contained symbols; or use shared libs with LD_LIBRARY_PATH=build/install/lib.
+
+-fsanitize=fuzzer unknown — update clang/llvm to a newer version, or build with libFuzzer separately. Install clang-12+ or llvm package providing libFuzzer.
+- No crashes found after long run — add many real WebP files to seeds/, run longer, or use OSS-Fuzz harnesses for broader coverage.
