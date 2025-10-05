@@ -1,3 +1,37 @@
+# Updated at 6 october 2025
+
+## OSCP (Offensive Security Certified Professional) Path + Video Archives 2025.4
+
+💰 Official Price: $1749
+📂 Drop Contains: Full Course + All Lab Access
+
+🔗 Download Access:
+🌐 English Official By OffSec: https://drive.google.com/drive/folders/1KkFsfiJuIgxMKzvoGdW9EFSf4gHqVUD4
+🌐 Urdu/Hindi By Bitten Tech: 
+https://drive.google.com/drive/folders/1FzOEe8m1IF7gX-vBEFVDPykqQgLohCI-
+
+## Free PNPT Course by TCM Security 
+
+The official price of PNPT (Practical Network Penetration Tester) I’ve arranged it completely FREE for you all.
+
+💸Original Price: $2999
+
+📂 Download here:
+https://drive.google.com/drive/folders/12necBDleGWZIKvetk_wc1K2fZvDnw-Xo
+
+PNPT Course Material
+
+It's Covers real-world penetration testing skills, including:
+
+✅ External/Internal Network Penetration Testing
+✅ Active Directory Exploitation
+✅ Pivoting & Lateral Movement
+✅ Reporting & Documentation
+
+Perfect for anyone serious about leveling up in Red Teaming, Ethical Hacking, and Penetration Testing
+
+---
+
 # Updated at 13 august 2025
 
 ## TCM Security All Courses Working Links
